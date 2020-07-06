@@ -1,4 +1,10 @@
-package elindOpenApi
+package ylyOpenApi
+
+import (
+	"crypto/md5"
+	"encoding/hex"
+	"github.com/satori/go.uuid"
+)
 
 type Config struct {
 	clientId      string
@@ -6,11 +12,11 @@ type Config struct {
 	requestUrl    string
 	token         Token
 	machine       Machine
-	loggor    	  ElindSdkLogger
+	loggor    	  YlySdkLogger
 	bLogger       bool
 }
 
-type ElindSdkLogger interface {
+type YlySdkLogger interface {
 	Info(message string)
 	Error(message string)
 }
@@ -53,9 +59,25 @@ func (conf *Config) SetToken(token Token) {
 	conf.token = token
 }
 
-func (conf *Config) SetLogger(logger ElindSdkLogger) {
+func (conf *Config) SetLogger(logger YlySdkLogger) {
 	conf.loggor = logger
 	conf.bLogger = true
+}
+
+func (conf *Config) GetSign(timestamp string) string {
+	h := md5.New()
+	h.Write([]byte(conf.clientId + timestamp + conf.clientSecret))
+	cipherStr := h.Sum(nil)
+	return hex.EncodeToString(cipherStr)
+}
+
+func (conf *Config) GetUUID4() string {
+	u4, err := uuid.NewV4()
+	if err != nil {
+		conf.error(string(err.Error()))
+		return err.Error()
+	}
+	return u4.String()
 }
 
 func (conf *Config) GetHost() string {
