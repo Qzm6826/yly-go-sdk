@@ -25,6 +25,7 @@ type Token struct {
 	AccessToken   string
 	RefreshToken  string
 	Expires_in    int
+	MachineCode   string
 }
 
 type Machine struct {
