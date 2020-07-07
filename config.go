@@ -33,11 +33,6 @@ type Token struct {
 	Body              TokenBody
 }
 
-type Machine struct {
-	MachineCode string
-	Msign       string
-}
-
 func NewConfig(cid string, secret string) Config {
 	conf := Config{}
 	conf.SetClientId(cid)
