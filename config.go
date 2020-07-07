@@ -23,19 +23,19 @@ type YlySdkLogger interface {
 type TokenBody struct {
 	Access_token   string
 	Refresh_token  string
-	Expires_in    int
+	Expires_in     int
 	Machine_code   string
 }
 
 type Token struct {
-	Error string
+	Error             string
 	Error_description string
-	Body TokenBody
+	Body              TokenBody
 }
 
 type Machine struct {
-	MachineCode   string
-	Msign         string
+	MachineCode string
+	Msign       string
 }
 
 func NewConfig(cid string, secret string) Config {
