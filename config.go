@@ -3,7 +3,6 @@ package ylyOpenApi
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"github.com/satori/go.uuid"
 )
 
 type Config struct {
@@ -21,11 +20,17 @@ type YlySdkLogger interface {
 	Error(message string)
 }
 
-type Token struct {
-	AccessToken   string
-	RefreshToken  string
+type TokenBody struct {
+	Access_token   string
+	Refresh_token  string
 	Expires_in    int
-	MachineCode   string
+	Machine_code   string
+}
+
+type Token struct {
+	Error string
+	Error_description string
+	Body TokenBody
 }
 
 type Machine struct {
@@ -70,15 +75,6 @@ func (conf *Config) GetSign(timestamp string) string {
 	h.Write([]byte(conf.clientId + timestamp + conf.clientSecret))
 	cipherStr := h.Sum(nil)
 	return hex.EncodeToString(cipherStr)
-}
-
-func (conf *Config) GetUUID4() string {
-	u4, err := uuid.NewV4()
-	if err != nil {
-		conf.error(string(err.Error()))
-		return err.Error()
-	}
-	return u4.String()
 }
 
 func (conf *Config) GetHost() string {
