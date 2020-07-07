@@ -32,6 +32,7 @@ func (oauth *OAuthClient) GetAuthUrl(redirectUri string, state string) string{
 	params.Set("response_type", responseType)
 	params.Set("redirect_uri", redirectUri)
 	params.Set("state", state)
+	oauth.config.info("GetAuthUrl[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	authUrl := host + "/oauth/authorize?" + params.Encode()
 	return authUrl
@@ -74,7 +75,7 @@ func (oauth *OAuthClient) GetAccessTokenByAuthCode(code string) Token {
 	params.Set("timestamp", timestamp)
 	params.Set("sign", sign)
 	params.Set("id", oauth.GetUUID4())
-	oauth.config.info("GetAccessTokenByAuthCode[req]：" +string(params.Encode()))
+	oauth.config.info("GetAccessTokenByAuthCode[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	reqUrl := host + "/oauth/oauth"
 	resp, _ := http.PostForm(reqUrl, params)
@@ -99,7 +100,7 @@ func (oauth *OAuthClient) GetAccessTokenByRefreshToken(refreshToken string) Toke
 	params.Set("timestamp", timestamp)
 	params.Set("sign", sign)
 	params.Set("id", oauth.GetUUID4())
-	oauth.config.info("GetAccessTokenByRefreshToken[req]：" +string(params.Encode()))
+	oauth.config.info("GetAccessTokenByRefreshToken[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	reqUrl := host + "/oauth/oauth"
 	resp, _ := http.PostForm(reqUrl, params)
@@ -124,7 +125,7 @@ func (oauth *OAuthClient) GetAccessTokenByQrKey(machineCode string, qrKey string
 	params.Set("timestamp", timestamp)
 	params.Set("sign", sign)
 	params.Set("id", oauth.GetUUID4())
-	oauth.config.info("GetAccessTokenByQrKey[req]：" +string(params.Encode()))
+	oauth.config.info("GetAccessTokenByQrKey[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	reqUrl := host + "/oauth/scancodemodel"
 	resp, _ := http.PostForm(reqUrl, params)
