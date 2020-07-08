@@ -10,7 +10,6 @@ type Config struct {
 	clientSecret  string
 	requestUrl    string
 	token         Token
-	machine       Machine
 	loggor    	  YlySdkLogger
 	bLogger       bool
 }
@@ -50,10 +49,6 @@ func (conf *Config) SetClientSecret(secret string) {
 
 func (conf *Config) SetRequestUrl(reqUrl string) {
 	conf.requestUrl = reqUrl
-}
-
-func (conf *Config) SetMachine(machine Machine) {
-	conf.machine = machine
 }
 
 func (conf *Config) SetToken(token Token) {
