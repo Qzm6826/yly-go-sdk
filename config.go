@@ -9,7 +9,7 @@ type Config struct {
 	clientId      string
 	clientSecret  string
 	requestUrl    string
-	token         Token
+	tokenBody     TokenBody
 	loggor    	  YlySdkLogger
 	bLogger       bool
 }
@@ -51,8 +51,8 @@ func (conf *Config) SetRequestUrl(reqUrl string) {
 	conf.requestUrl = reqUrl
 }
 
-func (conf *Config) SetToken(token Token) {
-	conf.token = token
+func (conf *Config) SetToken(token TokenBody) {
+	conf.tokenBody = token
 }
 
 func (conf *Config) SetLogger(logger YlySdkLogger) {
