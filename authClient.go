@@ -112,7 +112,7 @@ func (oauth *OAuthClient) GetAccessTokenByRefreshToken(refreshToken string) Toke
 	return token
 }
 
-//开放型应用极速授权获取调用凭证（需终端号machineCode，特殊密钥qrKey）
+//极速授权获取调用凭证（需终端号machineCode，特殊密钥qrKey）注意：仅支持开放型应用
 func (oauth *OAuthClient) GetAccessTokenByQrKey(machineCode string, qrKey string) Token {
 	params := url.Values{}
 	t := time.Now().Unix()
