@@ -26,7 +26,7 @@ func (e APIError) Error() string {
 }
 
 func APIInterface(config *Config, strAction string, params map[string]interface{}) (interface{}, error) {
-	tokenBody := config.token.Body
+	tokenBody := config.tokenBody
 	t := time.Now().Unix()
 	timestamp := strconv.FormatInt(t, 10)
 	sign := config.GetSign(timestamp)
