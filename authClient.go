@@ -64,7 +64,7 @@ func (oauth *OAuthClient) GetAccessToken() Token {
 	return token
 }
 
-//开放型应用获取调用凭API 证需（授权码code）
+//开放型应用获取调用凭API
 //code 授权码
 func (oauth *OAuthClient) GetAccessTokenByAuthCode(code string) Token {
 	params := url.Values{}
@@ -116,7 +116,7 @@ func (oauth *OAuthClient) GetAccessTokenByRefreshToken(refreshToken string) Toke
 	return token
 }
 
-//极速授权获取调用凭证API（需终端号machineCode，特殊密钥qrKey）注意：仅支持开放型应用
+//极速授权获取调用凭证API 注意：仅支持开放型应用
 //machineCode 终端号
 //qrKey 特殊密钥
 func (oauth *OAuthClient) GetAccessTokenByQrKey(machineCode string, qrKey string) Token {
