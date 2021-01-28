@@ -19,17 +19,17 @@ type YlySdkLogger interface {
 	Error(message string)
 }
 
+type Token struct {
+	Error             string
+	Error_description string
+	Body              TokenBody
+}
+
 type TokenBody struct {
 	Access_token   string
 	Refresh_token  string
 	Expires_in     int
 	Machine_code   string
-}
-
-type Token struct {
-	Error             string
-	Error_description string
-	Body              TokenBody
 }
 
 func NewConfig(cid string, secret string) Config {
@@ -72,6 +72,13 @@ func (conf *Config) GetHost() string {
 		return conf.requestUrl
 	}
 	return RequestUrl()
+}
+
+func (conf *Config) CheckAccessToken() bool{
+	if conf.token.Error_description != "success" {
+		return false
+	}
+	return true
 }
 
 func (conf *Config) diagnosis() {
