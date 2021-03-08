@@ -118,15 +118,19 @@ func (oauth *OAuthClient) GetAccessTokenByRefreshToken(refreshToken string) Toke
 
 //极速授权获取调用凭证API 注意：仅支持开放型应用
 //machineCode 终端号
-//qrKey 特殊密钥
-func (oauth *OAuthClient) GetAccessTokenByQrKey(machineCode string, qrKey string) Token {
+//secret 密钥(可能是msign或qr_key)
+func (oauth *OAuthClient) GetAccessTokenBySecret(machineCode string, secret string, secretType int) Token {
 	params := url.Values{}
 	t := time.Now().Unix()
 	timestamp := strconv.FormatInt(t, 10)
 	sign := oauth.config.GetSign(timestamp)
 	params.Set("client_id", oauth.config.clientId)
 	params.Set("machine_code", machineCode)
-	params.Set("qr_key", qrKey)
+	if secretType == 1 {
+		params.Set("qr_key", secret)
+	}else {
+		params.Set("msign", secret)
+	}
 	params.Set("scope", "all")
 	params.Set("timestamp", timestamp)
 	params.Set("sign", sign)

@@ -10,7 +10,7 @@ type Config struct {
 	clientSecret  string
 	requestUrl    string
 	token         Token
-	loggor    	  YlySdkLogger
+	logger    	  YlySdkLogger
 	bLogger       bool
 }
 
@@ -56,7 +56,7 @@ func (conf *Config) SetToken(token Token) {
 }
 
 func (conf *Config) SetLogger(logger YlySdkLogger) {
-	conf.loggor = logger
+	conf.logger = logger
 	conf.bLogger = true
 }
 
@@ -74,15 +74,8 @@ func (conf *Config) GetHost() string {
 	return RequestUrl()
 }
 
-func (conf *Config) CheckAccessToken() bool{
-	if conf.token.Error_description != "success" {
-		return false
-	}
-	return true
-}
-
 func (conf *Config) diagnosis() {
-	if conf.loggor != nil {
+	if conf.logger != nil {
 		conf.bLogger = true
 	}else {
 		conf.bLogger = false
@@ -92,14 +85,14 @@ func (conf *Config) diagnosis() {
 func (conf *Config) info(info string) {
 	conf.diagnosis()
 	if conf.bLogger {
-		conf.loggor.Info(info)
+		conf.logger.Info(info)
 	}
 }
 
 func (conf *Config) error(err string) {
 	conf.diagnosis()
 	if conf.bLogger {
-		conf.loggor.Error(err)
+		conf.logger.Error(err)
 	}
 }
 
