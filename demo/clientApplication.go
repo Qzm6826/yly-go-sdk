@@ -1,7 +1,7 @@
 package main
 
 import (
-	openApi "../../yly-go-sdk"
+	openApi "github.com/Qzm6826/yly-go-sdk"
 	"encoding/json"
 	"fmt"
 	"github.com/gomodule/redigo/redis"
