@@ -64,7 +64,7 @@
  
  ```go
      ...
-     // 通过授权得到的 code，以及正确的 callback_url，获取token
+     // 通过授权得到的 code，获取token
      tokenData := oauth.GetAccessTokenByAuthCode(code)
      conf.SetToken(tokenData)
      ...
