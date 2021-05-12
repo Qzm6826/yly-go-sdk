@@ -18,11 +18,12 @@ func (PrintService *PrintService) PicturePrint(machineCode string, pictureUrl st
 	return APIInterface(PrintService.config, "/pictureprint/index", params)
 }
 
-//面单打印。参数（终端号machineCode，面单数据详情请看文档content，商户订单号originId）
-func (PrintService *PrintService) ExpressOrderPrint(machineCode string, content string, originId string) (interface{}, error) {
+//面单打印。参数（终端号machineCode，面单数据详情请看文档content，商户订单号originId，sandbox沙箱环境：1  正式环境：0）
+func (PrintService *PrintService) ExpressOrderPrint(machineCode string, content string, originId string, sandbox int) (interface{}, error) {
 	params := make(map[string]interface{})
 	params["machine_code"] = machineCode
 	params["content"] = content
 	params["origin_id"] = originId
+	params["sandbox"] = sandbox
 	return APIInterface(PrintService.config, "/expressprint/index", params)
 }
