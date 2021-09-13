@@ -46,6 +46,7 @@ func APIInterface(config *Config, strAction string, params map[string]interface{
 	resp, _ := http.PostForm(reqUrl, reqParams)
 	body, _ := ioutil.ReadAll(resp.Body)
 	config.info(strAction + "[res]：" + string(body))
+	defer resp.Body.Close()
 	var apiResp apiResponse
 	json.Unmarshal([]byte(body), &apiResp)
 	if apiResp.Error_description != "success" {
