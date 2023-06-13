@@ -2,6 +2,7 @@ package ylyOpenApi
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/satori/go.uuid"
 	"io/ioutil"
 	"net/http"
@@ -11,7 +12,7 @@ import (
 )
 
 type apiResponse struct {
-	Error string
+	Error int
 	Error_description string
 	Body  interface{}
 }
@@ -51,7 +52,7 @@ func APIInterface(config *Config, strAction string, params map[string]interface{
 	json.Unmarshal([]byte(body), &apiResp)
 	if apiResp.Error_description != "success" {
 		errorInfo := make(map[string]string)
-		errorInfo["code"] = apiResp.Error
+		errorInfo["code"] = strconv.Itoa(apiResp.Error)
 		errorInfo["message"] = apiResp.Error_description
 		tmp, _ := json.Marshal(errorInfo)
 		config.error(string(tmp))
@@ -59,6 +60,7 @@ func APIInterface(config *Config, strAction string, params map[string]interface{
 		json.Unmarshal(tmp, &apiErr)
 		return nil, apiErr
 	}
+	fmt.Println(apiResp.Body)
 	return apiResp.Body , nil
 }
 

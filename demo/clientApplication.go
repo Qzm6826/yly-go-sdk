@@ -44,20 +44,20 @@ func GetAccessToken(redisCli redis.Conn) {
 }
 
 /**
-ApiClient.PrintService下集成了3个API：
-TextPrint、PicturePrint、ExpressOrderPrint
+ApiClient.PrintService下集成了4个API：
+TextPrint、PicturePrint、ExpressOrderPrint、ExpressOrderCancel
  */
-func TextPrint(client openApi.ApiClient, machineCode string, content string, originId string)  {
-	res, _ := client.PrintService.TextPrint(machineCode, content, originId)
+func TextPrint(client openApi.ApiClient, machineCode string, content string, originId string, idempotence int)  {
+	res, _ := client.PrintService.TextPrint(machineCode, content, originId, idempotence)
 	fmt.Println(res)
 }
 
 /**
-ApiClient.SetPrinter下集成了20个API：
+ApiClient.SetPrinter下集成了21个API：
 AddPrinter、SetVoice、DelVoice、DelPrinter、SetPrinterMenu、
 ShutdownOrRestart、SetSound、GetPrinterInfo、GetPrinterVersion、CancelAllPrintOrders、
 CancelAPrintOrder、SetIcon、DelIcon、SetPrintMode、SetOrderConfirmation、
-SetPushUrlByClient、SetPushUrlByAuth、GetOrderStatus、GetOrderList、GetPrintStatus
+SetPushUrlByClient、SetPushUrlByAuth、GetOrderStatus、GetOrderList、Reprint、GetPrintStatus
  */
 func AddPrinter(client openApi.ApiClient, machineCode string, mSign string, printName string) {
 	res, _ := client.SetPrinter.AddPrinter(machineCode, mSign, printName)
@@ -68,6 +68,7 @@ func main() {
 	cid := ""    //你的应用id
 	secret := "" //你的应用密钥
 	conf = openApi.NewConfig(cid, secret)
+	conf.SetRequestUrl("https://open-api.10ss.net/v2")	//设置v2版本接口
 	var logger openApi.SimpleLogger
 	conf.SetLogger(&logger)
 	redisCli := ConnectRedis()
@@ -76,5 +77,6 @@ func main() {
 	}
 	client := openApi.NewClient(conf)
 	AddPrinter(client, "", "", "")   //未绑定打印机，需先调用此方法
-	TextPrint(client, "", "", "")
+	TextPrint(client, "", "", "", 0)
 }
+

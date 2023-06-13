@@ -1,5 +1,7 @@
 package ylyOpenApi
 
+import "strconv"
+
 //绑定打印机API
 //machineCode 终端号
 //mSign       终端密钥
@@ -22,7 +24,7 @@ func (SetPrinter *SetPrinter) SetVoice(machineCode string, content string, isFil
 	params["machine_code"] = machineCode
 	params["content"] = content
 	params["is_file"] = isFile
-	params["aid"] = aId
+	params["aid"] = strconv.Itoa(aId)
 	return  APIInterface(SetPrinter.config, "/printer/setvoice", params)
 }
 
@@ -32,7 +34,7 @@ func (SetPrinter *SetPrinter) SetVoice(machineCode string, content string, isFil
 func (SetPrinter *SetPrinter) DelVoice(machineCode string, aId int) (interface{}, error) {
 	params := make(map[string]interface{})
 	params["machine_code"] = machineCode
-	params["aid"] = aId
+	params["aid"] = strconv.Itoa(aId)
 	return  APIInterface(SetPrinter.config, "/printer/deletevoice", params)
 }
 
@@ -186,14 +188,24 @@ func (SetPrinter *SetPrinter) GetOrderStatus(machineCode string, orderId string)
 
 //获取订单列表API
 //machineCode 终端号
-//pageIndex 查询条件—当前页码,暂只提供前3页数据
+//pageIndex 查询条件—当前页码,暂只提供前100页数据
 //pageSize 查询条件—每页显示条数,每页最大条数100
 func (SetPrinter *SetPrinter) GetOrderList(machineCode string, pageIndex int, pageSize int) (interface{}, error) {
 	params := make(map[string]interface{})
 	params["machine_code"] = machineCode
-	params["page_index"] = pageIndex
-	params["page_size"] = pageSize
+	params["page_index"] = strconv.Itoa(pageIndex)
+	params["page_size"] = strconv.Itoa(pageSize)
 	return APIInterface(SetPrinter.config, "/printer/getorderpaginglist", params)
+}
+
+//订单重打（单订单）API
+//machineCode 终端号
+//orderId 易联云打印id
+func (SetPrinter *SetPrinter) Reprint(machineCode string, orderId string) (interface{}, error) {
+	params := make(map[string]interface{})
+	params["machine_code"] = machineCode
+	params["order_id"] = orderId
+	return APIInterface(SetPrinter.config, "/printer/reprintorder", params)
 }
 
 //获取终端状态API

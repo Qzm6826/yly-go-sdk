@@ -20,7 +20,7 @@ type YlySdkLogger interface {
 }
 
 type Token struct {
-	Error             string
+	Error             int
 	Error_description string
 	Body              TokenBody
 }
