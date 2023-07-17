@@ -2,7 +2,7 @@ package ylyOpenApi
 
 import (
 	"encoding/json"
-	"github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -149,10 +149,6 @@ func (oauth *OAuthClient) GetAccessTokenBySecret(machineCode string, secret stri
 
 //获取UUID4
 func (oauth *OAuthClient) GetUUID4() string {
-	u4, err := uuid.NewV4()
-	if err != nil {
-		oauth.config.error(string(err.Error()))
-		return err.Error()
-	}
+	u4 := uuid.New()
 	return u4.String()
 }

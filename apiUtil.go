@@ -3,7 +3,7 @@ package ylyOpenApi
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -66,9 +66,6 @@ func APIInterface(config *Config, strAction string, params map[string]interface{
 
 //获取UUID4
 func GetUUID4() string {
-	u4, err := uuid.NewV4()
-	if err != nil {
-		return err.Error()
-	}
+	u4 := uuid.New()
 	return u4.String()
 }
