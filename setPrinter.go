@@ -215,3 +215,17 @@ func (SetPrinter *SetPrinter) GetPrintStatus(machineCode string) (interface{}, e
 	params["machine_code"] = machineCode
 	return APIInterface(SetPrinter.config, "/printer/getprintstatus", params)
 }
+
+//K8关键词设置API
+//machineCode 终端号
+//keys 关键词-key
+//type 黑白名单类型
+//content 关键词-value 数据类型 json数组
+func (SetPrinter *SetPrinter) SetKeywords(machineCode string, keys string, keyType string, content string) (interface{}, error) {
+	params := make(map[string]interface{})
+	params["machine_code"] = machineCode
+	params["keys"] = keys
+	params["type"] = keyType
+	params["content"] = content
+	return APIInterface(SetPrinter.config, "/printer/setkeywords", params)
+}
