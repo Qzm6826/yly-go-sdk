@@ -53,11 +53,12 @@ func TextPrint(client openApi.ApiClient, machineCode string, content string, ori
 }
 
 /**
-ApiClient.SetPrinter下集成了22个API：
+ApiClient.SetPrinter下集成了24个API：
 AddPrinter、SetVoice、DelVoice、DelPrinter、SetPrinterMenu、
 ShutdownOrRestart、SetSound、GetPrinterInfo、GetPrinterVersion、CancelAllPrintOrders、
 CancelAPrintOrder、SetIcon、DelIcon、SetPrintMode、SetOrderConfirmation、
-SetPushUrlByClient、SetPushUrlByAuth、GetOrderStatus、GetOrderList、Reprint、GetPrintStatus、SetKeywords
+SetPushUrlByClient、SetPushUrlByAuth、GetOrderStatus、GetOrderList、Reprint、GetPrintStatus、
+PushSwitch、SetKeywords、Setting
  */
 func AddPrinter(client openApi.ApiClient, machineCode string, mSign string, printName string) {
 	res, _ := client.SetPrinter.AddPrinter(machineCode, mSign, printName)
