@@ -1,6 +1,8 @@
 package ylyOpenApi
 
-import "strconv"
+import (
+	"strconv"
+)
 
 //绑定打印机API
 //machineCode 终端号
@@ -216,6 +218,16 @@ func (SetPrinter *SetPrinter) GetPrintStatus(machineCode string) (interface{}, e
 	return APIInterface(SetPrinter.config, "/printer/getprintstatus", params)
 }
 
+//K8推送开关设置API
+//machineCode 终端号
+//status 开启"open"，关闭"close"
+func (SetPrinter *SetPrinter) PushSwitch(machineCode string, status string) (interface{}, error) {
+	params := make(map[string]interface{})
+	params["machine_code"] = machineCode
+	params["status"] = status
+	return APIInterface(SetPrinter.config, "/printer/pushswitch", params)
+}
+
 //K8关键词设置API
 //machineCode 终端号
 //keys 关键词-key
@@ -228,4 +240,24 @@ func (SetPrinter *SetPrinter) SetKeywords(machineCode string, keys string, keyTy
 	params["type"] = keyType
 	params["content"] = content
 	return APIInterface(SetPrinter.config, "/printer/setkeywords", params)
+}
+
+//K8高级设置API
+//machineCode 终端号
+//usbPrintMode USB打印设置 直接打印：0 扫码支付后打印：1
+//usbInputMode USB输入方式设置 键盘输入：0 刷脸或扫码设备输入：1
+//cameraDecodeTxMode 扫码输出设置 输出到服务器：0 输出到收银机：1
+func (SetPrinter *SetPrinter) Setting(machineCode string, usbPrintMode int, usbInputMode int, cameraDecodeTxMode int) (interface{}, error) {
+	params := make(map[string]interface{})
+	params["machine_code"] = machineCode
+	if usbPrintMode == 0 || usbPrintMode == 1 {
+		params["usb_print_mode"] = usbPrintMode
+	}
+	if usbInputMode == 0 || usbInputMode == 1 {
+		params["usb_input_mode"] = usbInputMode
+	}
+	if cameraDecodeTxMode == 0 || cameraDecodeTxMode == 1 {
+		params["camera_decode_tx_mode"] = cameraDecodeTxMode
+	}
+	return  APIInterface(SetPrinter.config, "/printer/setting", params)
 }
