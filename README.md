@@ -83,6 +83,9 @@
  3. 运行 demo。
  
  ## 更新日志
+ #### [v2.0.4]
+ * Release Date : 2024-05-08
+ 1. printer/pushswitch api 新增mode字段
  #### [v2.0.3]
  * Release Date : 2023-11-01
  1. [Feature]v2新增[K8推送开关设置](https://www.kancloud.cn/ly6886/oauth-api/3208323)接口。

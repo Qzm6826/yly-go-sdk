@@ -221,10 +221,12 @@ func (SetPrinter *SetPrinter) GetPrintStatus(machineCode string) (interface{}, e
 //K8推送开关设置API
 //machineCode 终端号
 //status 开启"open"，关闭"close"
-func (SetPrinter *SetPrinter) PushSwitch(machineCode string, status string) (interface{}, error) {
+//mode 扫码数据推送模式 1=标准模式（全推送给开发者，不支持易联云出餐、核销、收银服务）；2=支付模式（付款、退款、带YLY标识内容推送给开发者，支持易联云出餐、核销服务）；3=标识模式（仅带YLY标识内容推送给开发者，支持易联云出餐、核销、收银服务）；默认标准模式
+func (SetPrinter *SetPrinter) PushSwitch(machineCode string, status string, mode int) (interface{}, error) {
 	params := make(map[string]interface{})
 	params["machine_code"] = machineCode
 	params["status"] = status
+	params["mode"] = mode
 	return APIInterface(SetPrinter.config, "/printer/pushswitch", params)
 }
 
