@@ -44,8 +44,16 @@ func APIInterface(config *Config, strAction string, params map[string]interface{
 	config.info(strAction + "[req]：" + reqParams.Encode())
 	host := config.GetHost()
 	reqUrl := host + strAction
-	resp, _ := http.PostForm(reqUrl, reqParams)
-	body, _ := ioutil.ReadAll(resp.Body)
+	resp, err := http.PostForm(reqUrl, reqParams)
+	if err != nil {
+		config.error(fmt.Sprintf("HTTP 请求失败: %v", err))
+		return nil, err
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		config.error(fmt.Sprintf("读取响应体失败: %v", err))
+		return nil, err
+	}
 	config.info(strAction + "[res]：" + string(body))
 	defer resp.Body.Close()
 	var apiResp apiResponse

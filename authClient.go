@@ -2,6 +2,7 @@ package ylyOpenApi
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/google/uuid"
 	"io/ioutil"
 	"net/http"
@@ -55,8 +56,14 @@ func (oauth *OAuthClient) GetAccessToken() Token {
 	oauth.config.info("GetAccessToken[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	reqUrl := host + "/oauth/oauth"
-	resp, _ := http.PostForm(reqUrl, params)
-	body, _ := ioutil.ReadAll(resp.Body)
+	resp, err := http.PostForm(reqUrl, params)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("HTTP 请求失败: %v", err))
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("读取响应体失败: %v", err))
+	}
 	oauth.config.info("GetAccessToken[res]：" + string(body))
 	defer resp.Body.Close()
 	var token Token
@@ -81,8 +88,14 @@ func (oauth *OAuthClient) GetAccessTokenByAuthCode(code string) Token {
 	oauth.config.info("GetAccessTokenByAuthCode[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	reqUrl := host + "/oauth/oauth"
-	resp, _ := http.PostForm(reqUrl, params)
-	body, _ := ioutil.ReadAll(resp.Body)
+	resp, err := http.PostForm(reqUrl, params)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("HTTP 请求失败: %v", err))
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("读取响应体失败: %v", err))
+	}
 	oauth.config.info("GetAccessTokenByAuthCode[res]：" + string(body))
 	defer resp.Body.Close()
 	var token Token
@@ -107,8 +120,14 @@ func (oauth *OAuthClient) GetAccessTokenByRefreshToken(refreshToken string) Toke
 	oauth.config.info("GetAccessTokenByRefreshToken[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	reqUrl := host + "/oauth/oauth"
-	resp, _ := http.PostForm(reqUrl, params)
-	body, _ := ioutil.ReadAll(resp.Body)
+	resp, err := http.PostForm(reqUrl, params)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("HTTP 请求失败: %v", err))
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("读取响应体失败: %v", err))
+	}
 	oauth.config.info("GetAccessTokenByRefreshToken[res]：" + string(body))
 	defer resp.Body.Close()
 	var token Token
@@ -138,8 +157,14 @@ func (oauth *OAuthClient) GetAccessTokenBySecret(machineCode string, secret stri
 	oauth.config.info("GetAccessTokenByQrKey[req]：" + string(params.Encode()))
 	host := oauth.config.GetHost()
 	reqUrl := host + "/oauth/scancodemodel"
-	resp, _ := http.PostForm(reqUrl, params)
-	body, _ := ioutil.ReadAll(resp.Body)
+	resp, err := http.PostForm(reqUrl, params)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("HTTP 请求失败: %v", err))
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		oauth.config.error(fmt.Sprintf("读取响应体失败: %v", err))
+	}
 	oauth.config.info("GetAccessTokenByQrKey[res]：" + string(body))
 	defer resp.Body.Close()
 	var token Token
