@@ -83,6 +83,9 @@
  3. 运行 demo。
  
  ## 更新日志
+ #### [v2.0.5]
+ * Release Date : 2024-12-03
+ 1. 修护http请求异常导致的空指针问题
  #### [v2.0.4]
  * Release Date : 2024-05-08
  1. printer/pushswitch api 新增mode字段
